@@ -2,11 +2,26 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var favicon = require('serve-favicon');
 var logger = require('morgan');
+var mongoose = require('mongoose');
+var fs = require('file-system');
 
 var app = express();
 
-var fs = require('file-system')
+//connect to mongodb
+mongoose.connect('mongodb://localhost:27017/tutorial2', {
+  useMongoClient: true
+});
+
+var db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error"));
+db.once("open", function(callback){
+  console.log("Connection Succeeded");
+});
+
+
 
 fs.readdirSync('controllers').forEach(file => {
   if(file.substr(-3) == '.js') {
@@ -41,6 +56,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(3000, function() {console.log('listening on 3000')})
+app.listen(4000, function() {console.log('listening on 4000')})
 
 module.exports = app;
