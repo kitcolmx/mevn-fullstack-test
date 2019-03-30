@@ -12,7 +12,6 @@ var app = express();
 
 //connect to mongodb
 mongoose.connect('mongodb://localhost:27017/tutorial2', {
-  useMongoClient: true
 });
 
 var db = mongoose.connection;
